@@ -79,7 +79,7 @@ func (l *Logger) Error(args string) {
 }
 
 func (l *Logger) Errorf(format string, args interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args))
+	l.log(ERROR, fmt.Sprintf(format, args))
 }
 
 func (l *Logger) Notice(args string) {
@@ -87,7 +87,7 @@ func (l *Logger) Notice(args string) {
 }
 
 func (l *Logger) Noticef(format string, args interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args))
+	l.log(NOTICE, fmt.Sprintf(format, args))
 }
 
 func (l *Logger) Warning(args string) {
@@ -95,7 +95,7 @@ func (l *Logger) Warning(args string) {
 }
 
 func (l *Logger) Warningf(format string, args interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args))
+	l.log(WARNING, fmt.Sprintf(format, args))
 }
 
 func (l *Logger) Critical(args string) {
@@ -103,7 +103,7 @@ func (l *Logger) Critical(args string) {
 }
 
 func (l *Logger) Criticalf(format string, args interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args))
+	l.log(CRITICAL, fmt.Sprintf(format, args))
 }
 
 func NewModuleLogger(module string) *Logger {
