@@ -1,6 +1,7 @@
 package wlog
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -18,7 +19,7 @@ type Record struct {
 }
 
 type Logger struct {
-	Module string
+	Module         string
 	ExtraCalldepth int
 }
 
@@ -32,10 +33,10 @@ func (l *Logger) log(lvl Level, args string) {
 	}
 
 	record := &Record{
-		Time:      timeNow(),
-		Module:    l.Module,
-		Level:     lvl,
-		Args:      args,
+		Time:   timeNow(),
+		Module: l.Module,
+		Level:  lvl,
+		Args:   args,
 	}
 
 	defaultLog.log(lvl, 3+l.ExtraCalldepth, record)
@@ -61,24 +62,48 @@ func (l *Logger) Debug(args string) {
 	l.log(DEBUG, args)
 }
 
+func (l *Logger) Debugf(format string, args interface{}) {
+	l.log(DEBUG, fmt.Sprintf(format, args))
+}
+
 func (l *Logger) Info(args string) {
 	l.log(INFO, args)
+}
+
+func (l *Logger) Infof(format string, args interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args))
 }
 
 func (l *Logger) Error(args string) {
 	l.log(ERROR, args)
 }
 
+func (l *Logger) Errorf(format string, args interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args))
+}
+
 func (l *Logger) Notice(args string) {
 	l.log(NOTICE, args)
+}
+
+func (l *Logger) Noticef(format string, args interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args))
 }
 
 func (l *Logger) Warning(args string) {
 	l.log(WARNING, args)
 }
 
+func (l *Logger) Warningf(format string, args interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args))
+}
+
 func (l *Logger) Critical(args string) {
 	l.log(CRITICAL, args)
+}
+
+func (l *Logger) Criticalf(format string, args interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args))
 }
 
 func NewModuleLogger(module string) *Logger {

@@ -47,7 +47,7 @@ type Leveled interface {
 }
 
 type moduleLeveled struct {
-	levels 		map[string]Level
+	levels map[string]Level
 }
 
 func newModuleLeveled() Leveled {

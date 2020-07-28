@@ -39,7 +39,7 @@ func timeFormat() string {
 }
 
 func fileFormat(calldepth int) string {
-	_, file, line, ok := runtime.Caller(calldepth+1)
+	_, file, line, ok := runtime.Caller(calldepth + 1)
 	if !ok {
 		file = "???"
 		line = 0
