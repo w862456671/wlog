@@ -13,8 +13,9 @@ func main() {
 	}
 	fmt.Println(wlog.GetLevel("example"))
 
-	logger.Debug("debug")
-	logger.Debugf("debugf: %s", "test")
+	logger.Debug("debug", "debug")
+	logger.Debugf("debugf")
+	logger.Debugf("debugf: %s, %s", "test", "test")
 	logger.Info("info")
 	logger.Notice("notice")
 	logger.Warning("warning")

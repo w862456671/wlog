@@ -2,6 +2,7 @@ package wlog
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -58,52 +59,68 @@ func GetLevel(module string) Level {
 	return defaultLog.GetLevel(module)
 }
 
-func (l *Logger) Debug(args string) {
-	l.log(DEBUG, args)
+func (l *Logger) Debug(args ...interface{}) {
+	l.log(DEBUG, formatArgs(args))
 }
 
-func (l *Logger) Debugf(format string, args interface{}) {
-	l.log(DEBUG, fmt.Sprintf(format, args))
+func (l *Logger) Debugf(format string, args ...interface{}) {
+	l.log(DEBUG, templateArgs(format, args))
 }
 
-func (l *Logger) Info(args string) {
-	l.log(INFO, args)
+func (l *Logger) Info(args ...interface{}) {
+	l.log(INFO, formatArgs(args))
 }
 
-func (l *Logger) Infof(format string, args interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args))
+func (l *Logger) Infof(format string, args ...interface{}) {
+	l.log(INFO, templateArgs(format, args))
 }
 
-func (l *Logger) Error(args string) {
-	l.log(ERROR, args)
+func (l *Logger) Error(args ...interface{}) {
+	l.log(ERROR, formatArgs(args))
 }
 
-func (l *Logger) Errorf(format string, args interface{}) {
-	l.log(ERROR, fmt.Sprintf(format, args))
+func (l *Logger) Errorf(format string, args ...interface{}) {
+	l.log(ERROR, templateArgs(format, args))
 }
 
-func (l *Logger) Notice(args string) {
-	l.log(NOTICE, args)
+func (l *Logger) Notice(args ...interface{}) {
+	l.log(NOTICE, formatArgs(args))
 }
 
-func (l *Logger) Noticef(format string, args interface{}) {
-	l.log(NOTICE, fmt.Sprintf(format, args))
+func (l *Logger) Noticef(format string, args ...interface{}) {
+	l.log(NOTICE, templateArgs(format, args))
 }
 
-func (l *Logger) Warning(args string) {
-	l.log(WARNING, args)
+func (l *Logger) Warning(args ...interface{}) {
+	l.log(WARNING, formatArgs(args))
 }
 
-func (l *Logger) Warningf(format string, args interface{}) {
-	l.log(WARNING, fmt.Sprintf(format, args))
+func (l *Logger) Warningf(format string, args ...interface{}) {
+	l.log(WARNING, templateArgs(format, args))
 }
 
-func (l *Logger) Critical(args string) {
-	l.log(CRITICAL, args)
+func (l *Logger) Critical(args ...interface{}) {
+	l.log(CRITICAL, formatArgs(args))
 }
 
-func (l *Logger) Criticalf(format string, args interface{}) {
-	l.log(CRITICAL, fmt.Sprintf(format, args))
+func (l *Logger) Criticalf(format string, args ...interface{}) {
+	l.log(CRITICAL, templateArgs(format, args))
+}
+
+func formatArgs(args []interface{}) string {
+	return strings.TrimSuffix(fmt.Sprintln(args...), "\n")
+}
+
+func templateArgs(format string, args []interface{}) string {
+	msg := format
+
+	if msg == "" && len(args) > 0 {
+		msg = fmt.Sprint(args...)
+	} else if msg != "" && len(args) > 0 {
+		msg = fmt.Sprintf(format, args...)
+	}
+
+	return msg
 }
 
 func NewModuleLogger(module string) *Logger {
